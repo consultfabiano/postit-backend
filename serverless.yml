@@ -16,7 +16,7 @@ provider:
   runtime: nodejs12.x
   lambdaHashingVersion: 20201221
   apiGateway:
-    shouldStarNameWithService: true
+    shouldStartNameWithService: true
  
 functions:
   createAccount:
@@ -25,4 +25,21 @@ functions:
     - http:
         path: user/create
         method: post
-
+        request:
+          schema:
+            application/json: {
+              "type": "object",
+              "required": ["firstName", "lastName", "email", "password"]
+            }
+  login:
+    handler: src/modules/user/controller.login
+    events:
+    - http:
+        path: user
+        method: post
+        request:
+          schema:
+            application/json: {
+              "type": "object",
+              "required": ["email", "password"]
+            }
