@@ -58,5 +58,32 @@ functions:
               "type": "object",
               "required": ["name"]
             }
-
+  listBoards:
+      handler: src/modules/board/controller.listAll
+      events:
+      - http:
+          path: board/all
+          method: get
+          authorizer: authorizer
+  getBoard:
+      handler: src/modules/board/controller.get
+      events:
+      - http:
+          path: board
+          method: get
+          authorizer: authorizer 
+  updateBoard:
+      handler: src/modules/board/controller.put
+      events:
+      - http:
+          path: board
+          method: put
+          authorizer: authorizer
+  deleteBoard:
+      handler: src/modules/board/controller.deleteController
+      events:
+      - http:
+          path: board
+          method: delete
+          authorizer: authorizer                       
 
