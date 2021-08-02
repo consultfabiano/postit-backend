@@ -1,5 +1,5 @@
 import { badRequest, created, ok, serverError } from '../../utils/responses'
-import { createBoard, listBoards, getBoard } from './service'
+import { createBoard, listBoards, getBoard, updatedBoard, deleteBoard } from './service'
 
 export const create = async (event) => {
     try{
@@ -38,16 +38,29 @@ export const get = async (event) => {
 
 export const put = async (event) => {
     try{
-        return ok()
+        const { queryStringParameters } = event
+        if ( !queryStringParameters || !queryStringParameters.id ) throw new Error('id_required')
+
+        const auth = event.requestContext.authorizer
+        const body = JSON.parse(event.body)
+        const updateBoard = await updatedBoard (auth, queryStringParameters.id, body)
+        return ok(updateBoard)
     }catch (err) {
+        if (err.message === 'id_required') return badRequest(err.message)
         return serverError(err)
     }
 }
 
 export const deleteController = async (event) => {
-    try{
-        return ok()
-    }catch (err) {
-        return serverError(err)
+    try {
+      const { queryStringParameters } = event
+      if (!queryStringParameters || !queryStringParameters.id) throw new Error('id_required')
+  
+      const auth = event.requestContext.authorizer
+      await deleteBoard(auth, queryStringParameters.id)
+      return ok()
+    } catch (err) {
+      if (err.message === 'id_required') return badRequest(err.message)
+      return serverError(err)
     }
-}
+  }
