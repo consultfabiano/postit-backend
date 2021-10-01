@@ -25,8 +25,8 @@ provider:
   environment:
     MONGO_URL: ${param:MONGO_URL}
     LOGIN_TOKEN_SECRET: ${param:LOGIN_TOKEN_SECRET}
-    SITE_URL: ${param:SITE_URL}  
- 
+    SITE_URL: ${param:SITE_URL}
+
 functions:
   createAccount:
     handler: src/modules/user/controller.createAccount
