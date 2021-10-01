@@ -114,6 +114,4 @@ resources:
         ResponseType: DEFAULT_4XX
         RestApiId:
           Ref: 'ApiGatewayRestApi'
-            
-                                  
-
+          
