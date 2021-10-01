@@ -3,6 +3,7 @@ import { createBoard, listBoards, getBoard, updatedBoard, deleteBoard } from './
 
 export const create = async (event) => {
     try{
+        console.log("creating board...")
        const auth = event.requestContext.authorizer
        const body = JSON.parse(event.body)
        const board = await createBoard(auth, body) 
